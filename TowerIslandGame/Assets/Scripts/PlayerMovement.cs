@@ -35,9 +35,12 @@ public class PlayerMovement : MonoBehaviour
         float horInput = Input.GetAxisRaw("Horizontal");
         float verInput = Input.GetAxisRaw("Vertical");
 
-        Vector3 moveDir = new Vector3(horInput, 0, verInput);
+        Vector3 moveDir = new Vector3(horInput, 0, verInput).normalized;
 
-        rb.transform.Translate(moveDir * Time.deltaTime * Speed, Space.World);
+        if(moveDir.magnitude >= 0.1f)
+        {
+            rb.AddForce(moveDir * Speed * Time.deltaTime);
+        }
 
         if(moveDir != Vector3.zero)
         {
